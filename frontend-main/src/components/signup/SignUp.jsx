@@ -10,7 +10,7 @@ const SignUp = ({ url }) => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const roles = "USER";
+  const roles = "client";
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -34,25 +34,33 @@ const SignUp = ({ url }) => {
     const data = { names, email, password, roles };
     const config = {
       method: "post",
-      url: url + "/users/register",
+      url: url + "api/users/register",
       data: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     };
 
+    console.log("Sending request:", config); // Log the request config
+
     try {
-      const response = await axios(config);
-      if (response.status === 200) {
-        setMessage("sign up successfully");
-        navigate("/login");
-      } else {
-        setError("Sign Up failed" + response.status);
-      }
+        const response = await axios(config);
+        console.log("Response received:", response.data); // Log the response
+        if (response.status === 200) {
+          setMessage("Sign up successful. Check your email to verify your account.");
+          localStorage.setItem("email", email); // Save email for verification
+          navigate("/verify-email"); // Redirect to the verification page
+        }
+         else {
+            setError("Sign up failed: " + response.status);
+        }
     } catch (error) {
-      setError("something went wrong");
+        console.error("Error during request:", error.response || error.message); // Log error details
+        setError(
+            error.response?.data?.error || "Something went wrong. Please try again."
+        );
     }
-  };
+};
 
   return (
     <div className="signup__home sign__bg">

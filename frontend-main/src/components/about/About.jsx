@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./about.css";
 import { MdGroups } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
+import { useLocation } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 const About = () => {
+  const whyChooseUsRef = useRef(null);
+
+
+  const location = useLocation();
+  
+  // useEffect to scroll after the page is loaded
+  useEffect(() => {
+    if (location.state && location.state.scrollTo) {
+      const sectionId = location.state.scrollTo;
+      const sectionRef = {
+        "whyChooseUs": whyChooseUsRef,
+      }[sectionId];
+  
+      // Delay scroll by a bit to ensure the element is rendered
+      if (sectionRef && sectionRef.current) {
+        setTimeout(() => {
+          sectionRef.current.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [location]);
+  
   return (
+    <><Navbar />
     <div className="about" id="about">
-      <h1 className="about__header">Why You Choose Us?</h1>
+       <h1 className="about__header" ref={whyChooseUsRef} id="whyChooseUs">
+        Why You Choose Us?
+      </h1>
       <p className="about__p">we provide full Services</p>
       <div className="about__home">
         <div className="about__card">
@@ -43,7 +71,7 @@ const About = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div><Footer /></>
   );
 };
 

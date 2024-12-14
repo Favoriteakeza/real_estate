@@ -1,96 +1,95 @@
-import React, { useState } from "react";
-import AllHouse from "../allHouses.jsx/AllHouse";
-import AllUsers from "../allUsers/AllUsers";
+import React, { useEffect, useRef } from "react";
 import "./admin.css";
-import { Link } from "react-router-dom";
-import Statistics from "../statistics/Statistics";
-import { MdDashboard } from "react-icons/md";
-import { BsFillHousesFill } from "react-icons/bs";
-import { FaUsers, FaBookmark } from "react-icons/fa";
-import { RiLogoutCircleFill } from "react-icons/ri";
-import { images } from "../../constants";
-import AllBookings from "../allBookings/AllBookings";
+import { useLocation } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 
-const AdminDashboard = () => {
-  const [currentComponent, setCurrentComponent] = useState(<Statistics />);
-
-  const handleLinkClick = (componentName) => {
-    // Logic to determine which component to render based on the clicked link
-    if (componentName === "Dashboard") {
-      setCurrentComponent(<Statistics />);
-    }
-    if (componentName === "allHouses") {
-      setCurrentComponent(<AllHouse />);
-    }
-    if (componentName === "allUsers") {
-      setCurrentComponent(<AllUsers />);
-    }
-    if (componentName === "allBookings") {
-      setCurrentComponent(<AllBookings />);
-    }
-
-    // Add logic for other components as needed
+const AdminDashboard =() => {
+  // Static data
+  const data = {
+    ongoingProjects: 8,
+    completedProjects: 15,
+    pendingTasks: 20,
+    totalMaterials: 500,
+    upcomingDeadlines: 3,
+    budgetUtilization: "75%",
+    teamMembers: 25,
   };
-
+const dashboardRef = useRef()
+  
+  
+    const location = useLocation();
+    
+    // useEffect to scroll after the page is loaded
+    useEffect(() => {
+      if (location.state && location.state.scrollTo) {
+        const sectionId = location.state.scrollTo;
+        const sectionRef = {
+         "dashboard": dashboardRef
+        }[sectionId];
+    
+        // Delay scroll by a bit to ensure the element is rendered
+        if (sectionRef && sectionRef.current) {
+          setTimeout(() => {
+            sectionRef.current.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      }
+    }, [location]);
   return (
-    <div className="admin-dashboard">
-      <div className="sidebar">
-        <div className="sidebar__nav">
-          <div className="sidebar__image">
-            <img src={images.logo} alt="" />
-          </div>
-          <div className="sidebar__content">
-            <h2>Admin</h2>
-          </div>
+    <><Navbar />
+    <div className="dashboard__container">
+      <h1 className="dashboard__title" ref={dashboardRef} id="dashboard"> 
+        Dashboard</h1>
+      <p className="dashboard__subtitle">
+        Welcome! Here's an overview of business operations at a glance.
+      </p>
+      <div className="dashboard__summary">
+        {/* Summary Cards */}
+        <div className="dashboard__card">
+          <h2 className="card__title">Ongoing Projects</h2>
+          <p className="card__value">{data.ongoingProjects}</p>
         </div>
-        <ul className="sidebar__ul">
-          <li className="sidebar__li">
-            <button
-              className="sidebar__btn"
-              onClick={() => handleLinkClick("Dashboard")}
-            >
-              <MdDashboard className="dash__icon" />
-              Dashboard
-            </button>
-          </li>
-          <li>
-            <button
-              className="sidebar__btn"
-              onClick={() => handleLinkClick("allHouses")}
-            >
-              <BsFillHousesFill className="dash__icon" />
-              Houses
-            </button>
-          </li>
-          <li>
-            <button
-              className="sidebar__btn"
-              onClick={() => handleLinkClick("allUsers")}
-            >
-              <FaUsers className="dash__icon" />
-              Users
-            </button>
-          </li>
-          <li>
-            <button
-              className="sidebar__btn"
-              onClick={() => handleLinkClick("allBookings")}
-            >
-              <FaBookmark className="dash__icon" />
-              Bookings
-            </button>
-          </li>
-        </ul>
-        <div className="sidebar__links">
-          <RiLogoutCircleFill className="dash__icon" />
-          <Link to="/logout" className="sidebar__link">
-            Logout
-          </Link>
+        <div className="dashboard__card">
+          <h2 className="card__title">Completed Projects</h2>
+          <p className="card__value">{data.completedProjects}</p>
+        </div>
+        <div className="dashboard__card">
+          <h2 className="card__title">Pending Tasks</h2>
+          <p className="card__value">{data.pendingTasks}</p>
+        </div>
+        <div className="dashboard__card">
+          <h2 className="card__title">Materials Used</h2>
+          <p className="card__value">{data.totalMaterials} Units</p>
         </div>
       </div>
 
-      <div className="content">{currentComponent}</div>
-    </div>
+      {/* Additional Information Section */}
+      <div className="dashboard__details">
+        <div className="details__card">
+          <h3>Budget Utilization</h3>
+          <p>{data.budgetUtilization} of allocated budget</p>
+        </div>
+        <div className="details__card">
+          <h3>Upcoming Deadlines</h3>
+          <p>{data.upcomingDeadlines} projects due this month</p>
+        </div>
+        <div className="details__card">
+          <h3>Team Members</h3>
+          <p>{data.teamMembers} active team members</p>
+        </div>
+      </div>
+
+      {/* Recent Activity Section */}
+      <div className="dashboard__activity">
+        <h2>Recent Activity</h2>
+        <ul className="activity__list">
+          <li>Project "Sunrise Villas" moved to final review.</li>
+          <li>Task "Material Purchase for Downtown Apartments" marked as completed.</li>
+          <li>New team member "John Doe" added to Project Alpha.</li>
+        </ul>
+      </div>
+    </div><Footer /></>
   );
 };
 

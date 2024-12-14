@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { images } from "../../constants";
 import "./contact.css";
+import { useLocation } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 
 const Contact = () => {
+    const ContactUsRef = useRef()
+  
+  
+    const location = useLocation();
+    
+    // useEffect to scroll after the page is loaded
+    useEffect(() => {
+      if (location.state && location.state.scrollTo) {
+        const sectionId = location.state.scrollTo;
+        const sectionRef = {
+         "ContactUS": ContactUsRef
+        }[sectionId];
+    
+        // Delay scroll by a bit to ensure the element is rendered
+        if (sectionRef && sectionRef.current) {
+          setTimeout(() => {
+            sectionRef.current.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      }
+    }, [location]);
   return (
+    <><Navbar />
     <div className="contact__home" id="contact">
-      <h2 className="contact__header">Contact Us</h2>
+     
+      <h2 className="contact__header"  ref={ContactUsRef} id="ContactUS">
+      Contact Us
+      </h2>
       <div className="home__contact">
         <div className="contact__images">
           <div className="contact__sub">
@@ -45,7 +73,7 @@ const Contact = () => {
           <div className="contact__social"></div>
         </div>
       </div>
-    </div>
+    </div><Footer /></>
   );
 };
 

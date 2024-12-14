@@ -1,48 +1,53 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { images } from "../../constants";
 import "./home.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 
 const Home = () => {
+  const HomeRef = useRef()
+    
+    
+      const location = useLocation();
+      
+      // useEffect to scroll after the page is loaded
+      useEffect(() => {
+        if (location.state && location.state.scrollTo) {
+          const sectionId = location.state.scrollTo;
+          const sectionRef = {
+           "Home": HomeRef
+          }[sectionId];
+      
+          // Delay scroll by a bit to ensure the element is rendered
+          if (sectionRef && sectionRef.current) {
+            setTimeout(() => {
+              sectionRef.current.scrollIntoView({ behavior: "smooth" });
+            }, 100);
+          }
+        }
+      }, [location]);
   return (
-    <div className="home__page app__bg" id="Home">
-      <nav className="home__navbar">
-        <div className="navbar__logo">
-          <img src={images.logo} alt="logo" />
-        </div>
-        <div className="navbar__content">
-          <a className="nav__link" href="#Home">
-            Home
-          </a>
-          <a className="nav__link" href="#features">
-            Features
-          </a>
-          <a className="nav__link" href="#about">
-            AboutUs
-          </a>
-          <a className="nav__link" href="#explore">
-            Explore
-          </a>
-          <a className="nav__link" href="#properties">
-            Properties
-          </a>
-          <a className="nav__link" href="#contact">
-            Contact Us
-          </a>
-          <Link className="nav__link" to="/login">
-            Login
-          </Link>
-        </div>
-      </nav>
-      <div className="home__content">
-        <h1>Find Better Home</h1>
-        <p>
-          Start your journey today. Browse our listings, connect with our team,
-          and let us help you find the perfect place to create lasting memories
-        </p>
-        <button>Get Started</button>
-      </div>
-    </div>
+    <><Navbar /> 
+   <div className="home__page">
+  <header className="home__header">
+    <h1 ref={HomeRef} id="Home">Welcome to Real Estate Solutions</h1>
+    <p>Your trusted partner in real estate development and investment.</p>
+    <button className="cta__button">Get Started</button>
+  </header>
+
+  <section className="home__features" id="features">
+    <h2>Key Features</h2>
+    <ul>
+      <li>Comprehensive property listings</li>
+      <li>Customizable real estate solutions</li>
+      <li>Professional consultation services</li>
+    </ul>
+   
+  </section>
+
+  
+</div><Footer /></>
   );
 };
 
