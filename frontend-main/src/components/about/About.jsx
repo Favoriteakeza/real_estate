@@ -31,7 +31,7 @@ const About = () => {
   
   return (
     <><Navbar />
-    <div className="about" id="about">
+    <div className="about"   id="about">
        <h1 className="about__header" ref={whyChooseUsRef} id="whyChooseUs">
         Why You Choose Us?
       </h1>

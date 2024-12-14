@@ -15,7 +15,7 @@ const Footer = () => {
           <h3 className="footer__header">Contact Us</h3>
           <div className="contact__footer">
             <MdEmail className="footer__icon" />
-            <p className="footer__p">Email: Nyrealestate@gmail.com</p>
+            <p className="footer__p">Email: fovoriteakeza@gmail.com</p>
           </div>
           <div className="contact__footer">
             <FaPhoneAlt className="footer__icon" />
@@ -34,12 +34,7 @@ const Footer = () => {
               Home
             </a>
           </div>
-          <div className="contact__footer">
-            <PiLinkSimpleBold className="footer__icon" />
-            <a href="#feature" className="footer__p">
-              Feature
-            </a>
-          </div>
+          
           <div className="contact__footer">
             <PiLinkSimpleBold className="footer__icon" />
             <a href="#about" className="footer__p">
@@ -50,6 +45,12 @@ const Footer = () => {
             <PiLinkSimpleBold className="footer__icon" />
             <a href="#contact" className="footer__p">
               Contact us
+            </a>
+          </div>
+          <div className="contact__footer">
+            <PiLinkSimpleBold className="footer__icon" />
+            <a href="#feature" className="footer__p">
+              Projects
             </a>
           </div>
         </div>

@@ -1,8 +1,10 @@
-*{
-    padding: 0;
+body, html {
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    
 }
+
 .app__bg{
     background: url("./assets/home4.jpg");
     background-position: center;

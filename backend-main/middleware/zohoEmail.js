@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 const sendVerificationEmail = (email, otp) => {
     const mailOptions = {
-        from: 'hirwan_landry@zohomail.com',
+        from: 'hirwa_landry@zohomail.com',
         to: email,
         subject: 'Verify Your Email',
         text: `Your OTP is: ${otp}. It will expire in 10 minutes.`,

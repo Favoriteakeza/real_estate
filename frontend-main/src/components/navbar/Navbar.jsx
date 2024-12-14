@@ -12,6 +12,7 @@ const Navbar = () => {
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
+   
 
     // Redirect to login page
     navigate("/login");
@@ -25,12 +26,11 @@ const Navbar = () => {
       <div className="navbar__content">
         <a className="nav__link" href="/">Home</a>
         <a className="nav__link" href="/about">About Us</a>
+        <a className="nav__link" href="/contact">Contact Us</a>
         <a className="nav__link" href="/projects">Projects</a>
         
         {/* Conditionally render the Dashboard link based on user role */}
-        {userRole === "admin" && <a className="nav__link" href="/admin">Dashboard</a>}
-        
-        <a className="nav__link" href="/contact">Contact Us</a>
+        {userRole === "admin" && <a className="nav__link" href="/admin">Dashboard</a>} 
 
         {/* Conditionally render Login, Sign up, or Logout */}
         {userRole ? (

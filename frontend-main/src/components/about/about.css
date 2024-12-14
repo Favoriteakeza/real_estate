@@ -1,9 +1,14 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .about{
     justify-content: center;
     align-items: center;
     padding: 2rem 2.5rem;
-    margin-top: 2rem;
     background-color: rgb(226, 226, 248);
+ 
 }
 .about__header{
     font-size: 2.5rem;
